@@ -1,5 +1,5 @@
 const express = require('express');
-// const db = require('./src/config/config.db');
+const db = require('./src/config/config.db');
 const app = express();
 
 const userRouter = require('./src/routes/authentication')
