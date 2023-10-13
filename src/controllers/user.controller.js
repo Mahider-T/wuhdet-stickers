@@ -11,7 +11,6 @@ const saveUser = async (req, res) =>{
         res.status(200).json({success: true, data: await newUser.save()})
     } catch(e) {
         res.status(500).json({success:false, data: e.message})
-        // res.status(500).send(e.messa);
     }
 }
 
