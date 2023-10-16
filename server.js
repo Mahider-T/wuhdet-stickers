@@ -8,13 +8,13 @@ app.use(express.json());
 const userRouter = require('./src/routes/authentication')
 app.use('/users', userRouter);
 
-app.post("/sendEmail", (req, res) => {
+app.post("/sendEmail",async  (req, res) => {
     try{
         const email = req.body.email;
         const subject = req.body.subject;
         const text = req.body.text;
 
-        sendEmail(email, subject, text);
+        await sendEmail(email, subject, text);
         res.status(200).send("email sent successfully");
     } catch(e) {
         res.status(500).send(e);
