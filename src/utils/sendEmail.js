@@ -24,7 +24,6 @@ const sendEmail = async (email, subject, text) => {
               refreshToken: process.env.OAUTH_REFRESH_TOKEN
             }
           });
-
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
