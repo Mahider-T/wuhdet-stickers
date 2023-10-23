@@ -28,12 +28,13 @@ const sendEmail = async (email, subject, text) => {
             from: process.env.EMAIL,
             to: email,
             subject: subject,
-            text: text,
+            // text: text,
+            html: text
         }
 
         await transporter.sendMail(mailOptions);
     } catch (err) {
-        console.log(err);
+        console.log("can not send email");
         throw err;
     }
         

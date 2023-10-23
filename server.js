@@ -23,6 +23,9 @@ app.post("/sendEmail",async  (req, res) => {
     
 })
 
+const authRouter = require('./src/routes/auth.router')
+app.use('/api', authRouter);
+
 
 app.listen(8080, () => {
     console.log("Listening on port 8080")
