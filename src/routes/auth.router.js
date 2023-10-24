@@ -3,8 +3,8 @@ const Router = express.Router();
 
 const auth = require('../controllers/auth.controller')
 
-// Router.use('/auth');
-Router.post('/auth/register', auth.register);
-Router.get('/auth/login', auth.login);
+Router.post('/register', auth.register);
+Router.get('/login', auth.login);
+Router.get('/verify/:token', auth.verify)
 
 module.exports = Router;

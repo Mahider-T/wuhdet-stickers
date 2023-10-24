@@ -1,5 +1,7 @@
 const User = require('../models/user');
+const Token = require('../models/token')
 const sendEmail = require('../utils/sendEmail');
+const user = require('../models/user');
 
 // @api/auth/register
 // @desc register user
@@ -23,27 +25,69 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try{
-        const {email} = req.body;
+        const email = req.body.email;
         console.log(email);
     
-        const user = await User.findOne({email: email});
-        if(!user) {
-            res.status(401).json({message: `Account with email ${email} not found.`});
-        }
-        const authenticate = user.comparePassword(req.body.password);
-        if(!authenticate) {
-            res.status(401).json({message: "Either email or password is incorrect"})
-        }
-        
-        if(!user.isVerified) {
-            res.status(401).json({message: "User is not verified."})
-        }
-        res.status(200).json({message:"User authenticated successfully"})
- 
+        await User.findOne({email: email}).then((user) => {
+            if(!user) {
+                res.status(401).json({message: `Account with email ${email} not found.`});
+            }
+            const authenticate = user.comparePassword(req.body.password);
+            if(!authenticate) {
+                res.status(401).json({message: "Either email or password is incorrect"})
+            }
+            
+            if(!user.isVerified) {
+                res.status(401).json({message: "User is not verified."})
+            }
+    
+            res.status(200).json({token: user.generateJWT(), user: user});
+            // res.status(200).json({message:"User authenticated successfully"})
+        }).catch((error) => {
+            res.status(500).json({message: error.message});
+        }) 
+       
     }catch(error) {
-        res.status(500).json({message : "Something went wrong."})
+        res.status(500).json({message : error.message})
     }   
     
+}
+
+// ===EMAIL VERIFICATION
+// @route GET api/verify/:token
+// @desc Verify token
+// @access Public
+
+
+const verify = async (req, res) => {
+    // if (!req.params.token) return res.status(400).json({message: "Unable to find the token"})
+    // console.log(req.params.token);
+    // await Token.findOne({token: req.params.toke }).then((token) => {console.log(token)}).catch((error)=> {console.log(error)});
+    // console.log(theToken.userId.toHexString());
+    // // res.send(theToken.userId);
+    // const theUser = await User.findOne({_id: theToken.userId});
+    // console.log(theUser);
+    // res.send(typeof(theUser));
+    // const theUser = User.findOne({_id: theToken.userId})
+    // res.send(theUser);
+    await Token.findOne({token: req.params.token}).
+        then(async (token) => {
+            if (!token) res.status(401).json({message: "Unable to find the token"});
+
+            // if the token is found, then look for the corresponding user.
+            
+            await User.findOne({_id: token.userId}).then(async (user) => {
+                // console.log(await user.findOne({id: token.userId}))
+                if (!user) res.status(400).json({message: "Unable to find a user with the given token"});
+                if (user.isVerified) res.status(400).json({message: "User is already verified, you can login."})
+
+                user.isVerified = true;
+                await user.save();
+                await user.save().then((user) => {res.status(200).json({message: "User verified successfully"})})
+                .catch((error) => {res.status(500).json({message: error.message})});
+            }).catch((error) => res.status(500).json({message : error.message}));
+        }).catch((error) => res.status(500).json({message: error.message}));
+      
 }
 
 
@@ -70,4 +114,4 @@ async function sendVerificationEmail(user, req, res){
     }
 }
 
-module.exports = {register, login};
+module.exports = {register, login, verify};
