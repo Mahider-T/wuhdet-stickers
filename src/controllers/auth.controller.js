@@ -2,6 +2,7 @@ const User = require('../models/user');
 const Token = require('../models/token')
 const sendEmail = require('../utils/sendEmail');
 const user = require('../models/user');
+const { errorMonitor } = require('nodemailer/lib/xoauth2');
 
 // @api/auth/register
 // @desc register user
@@ -23,9 +24,13 @@ const register = async (req, res) => {
     
 }
 
+// @route POST api/auth/login
+// @desc Login user and return JWT token
+// @access Public
+
 const login = async (req, res) => {
     try{
-        const email = req.body.email;
+        const {email} = req.body;
         console.log(email);
     
         await User.findOne({email: email}).then((user) => {
@@ -53,6 +58,7 @@ const login = async (req, res) => {
     
 }
 
+
 // ===EMAIL VERIFICATION
 // @route GET api/verify/:token
 // @desc Verify token
@@ -60,16 +66,6 @@ const login = async (req, res) => {
 
 
 const verify = async (req, res) => {
-    // if (!req.params.token) return res.status(400).json({message: "Unable to find the token"})
-    // console.log(req.params.token);
-    // await Token.findOne({token: req.params.toke }).then((token) => {console.log(token)}).catch((error)=> {console.log(error)});
-    // console.log(theToken.userId.toHexString());
-    // // res.send(theToken.userId);
-    // const theUser = await User.findOne({_id: theToken.userId});
-    // console.log(theUser);
-    // res.send(typeof(theUser));
-    // const theUser = User.findOne({_id: theToken.userId})
-    // res.send(theUser);
     await Token.findOne({token: req.params.token}).
         then(async (token) => {
             if (!token) res.status(401).json({message: "Unable to find the token"});
@@ -88,6 +84,26 @@ const verify = async (req, res) => {
             }).catch((error) => res.status(500).json({message : error.message}));
         }).catch((error) => res.status(500).json({message: error.message}));
       
+}
+
+// @route POST api/resend
+// @desc Resend Verification Token
+// @access Public
+const resendToken = async (req, res) => {
+    try{
+        const {email} = req.body;
+        const user = await User.findOne({email: email});
+        if(!user) res.status(401).json({message: `No account matches the email ${email}`});
+
+        if(user.isVerified) {
+            return res.status(400).json({message: "The account has already been verified"});
+
+        }
+        await sendVerificationEmail(user, req, res);
+        // res.status(200).json({message: "Verification email sent successfully"})
+    } catch(error) {
+        res.status(500).json({message: error.message})
+    }
 }
 
 
@@ -114,4 +130,4 @@ async function sendVerificationEmail(user, req, res){
     }
 }
 
-module.exports = {register, login, verify};
+module.exports = {register, login, verify, resendToken};

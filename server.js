@@ -26,6 +26,9 @@ app.post("/sendEmail",async  (req, res) => {
 const authRouter = require('./src/routes/auth.router')
 app.use('/api/auth', authRouter);
 
+const passwordRouter = require('./src/routes/password.router');
+app.use('/api/password', passwordRouter);
+
 
 
 app.listen(8080, () => {
