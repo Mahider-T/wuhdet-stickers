@@ -12,7 +12,7 @@ const register = async (req, res) => {
         const {email} = req.body;
         const userFound = await User.findOne({email});
         if (userFound) {
-            res.status(401).json({message: 'This email is already associated to an account.', })
+            return res.status(401).json({message: 'This email is already associated to an account.', })
         }
         const newUser = new User({...req.body, role: "basic"})
 

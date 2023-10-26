@@ -29,6 +29,9 @@ app.use('/api/auth', authRouter);
 const passwordRouter = require('./src/routes/password.router');
 app.use('/api/password', passwordRouter);
 
+const agentRouter = require('./src/routes/agent.router');
+app.use('/api/agent', agentRouter);
+
 
 
 app.listen(8080, () => {
