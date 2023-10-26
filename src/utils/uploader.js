@@ -1,9 +1,10 @@
 const Datauri = require('datauri');
+// const fs = require('fs')
 const path = require('path');
-
 const cloudinary = require('../config/cloudinary');
 
 function uploader(req) {
+    
     return new Promise((resolve, reject) => {
         const dUri = new Datauri();
         let image = dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
@@ -17,4 +18,4 @@ function uploader(req) {
 
 
 
-module.exports = { uploader };
+module.exports = uploader;

@@ -1,4 +1,6 @@
-const Agent = require('../models/agent')
+// const agent = require('../models/agent');
+const Agent = require('../models/agent');
+const uploader = require('../utils/uploader');
 
 const addAgent = async (req, res) => {
     try {
@@ -15,6 +17,34 @@ const addAgent = async (req, res) => {
     }
 }
 
+const updateAgentDetails = async (req, res) => {
+    try{ 
+
+        const update = req.body;
+        const id = req.params.agentId;
+        // const userId = req.user._id;
+
+        //Make sure the passed id is that of the logged in user
+        // if (userId.toString() !== id.toString()) return res.status(401).json({message: "Sorry, you don't have the permission to upd this data."}); 
+        const agentExists = await Agent.findOne({_id: id});
+        
+        if(!agentExists) return res.status(404).json({message: `No agent with phone number ${phoneNumber}`});
+        const agent = await Agent.findByIdAndUpdate(id, req.body, {new: true});
+        
+        if (!req.file) return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});
+
+
+        const result = await uploader(req);
+        const user_ = await Agent.findByIdAndUpdate(id, {$set: update}, {$set: {profileImage: result.url}}, {new: true});
+        return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});
+
+    }catch(error) {
+        // console.log(typeof(uploader));
+        console.log(error);
+        res.status(500).json({message: error.message})
+    }
+}
+
 const updateNumberOfDelivery = async (req, res) => {
     try{
         const {phoneNumber, changeBy} = req.body;
@@ -24,11 +54,14 @@ const updateNumberOfDelivery = async (req, res) => {
         userExists.incrementDelivery(changeBy);
         await userExists.save();
         res.status(200).json({message: "User updated successfully"});
+
     } catch(error) {
         res.status(500).json({message: error.message});
     }
 } 
 
+const uploadImage = async (req, res) => {
 
+}
 
-module.exports = {addAgent, updateNumberOfDelivery};
+module.exports = {addAgent, updateNumberOfDelivery, updateAgentDetails};
