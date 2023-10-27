@@ -22,20 +22,34 @@ const updateAgentDetails = async (req, res) => {
 
         const update = req.body;
         const id = req.params.agentId;
-        // const userId = req.user._id;
 
+        // const userId = req.user._id;
         //Make sure the passed id is that of the logged in user
         // if (userId.toString() !== id.toString()) return res.status(401).json({message: "Sorry, you don't have the permission to upd this data."}); 
-        const agentExists = await Agent.findOne({_id: id});
-        
-        if(!agentExists) return res.status(404).json({message: `No agent with phone number ${phoneNumber}`});
-        const agent = await Agent.findByIdAndUpdate(id, req.body, {new: true});
-        
-        if (!req.file) return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});
 
+        // const agentExists = await Agent.findOne({_id: id});
+        // if(!agentExists) return res.status(404).json({message: `No matching agent found`});
+
+        const agent = await Agent.findByIdAndUpdate(id, req.body, {new: true});
+        if (!req.file) {return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});}
 
         const result = await uploader(req);
-        const user_ = await Agent.findByIdAndUpdate(id, {$set: update}, {$set: {profileImage: result.url}}, {new: true});
+        imageUrl = result.url;
+        console.log(imageUrl);
+
+        const user_ = await Agent.findByIdAndUpdate(id, {
+            $set: {
+              ...update,
+              profileImage: imageUrl,
+            },
+            new: true,
+          });
+          
+        // let user_ = await Agent.findByIdAndUpdate(id, {$set: update}, {new: true});
+        // user_ = await Agent.findByIdAndUpdate(id, {$set: {profileImage: result.url}})
+        // const imageUrl = await Agent.findOne({id: id}, {profileImage: 1});
+        // console.log(imageUrl);
+        
         return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});
 
     }catch(error) {
