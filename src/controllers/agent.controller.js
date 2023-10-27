@@ -50,7 +50,7 @@ const updateAgentDetails = async (req, res) => {
         // const imageUrl = await Agent.findOne({id: id}, {profileImage: 1});
         // console.log(imageUrl);
         
-        return res.status(200).json({success: true, updatedUser: agent, message: "Agent updated successfully."});
+        return res.status(200).json({success: true, updatedUser: user_, message: "Agent updated successfully."});
 
     }catch(error) {
         // console.log(typeof(uploader));
