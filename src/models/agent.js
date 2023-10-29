@@ -62,11 +62,19 @@ const agentSchema = new mongoose.Schema({
         default: 0,
         required: true
 
+    },
+    costPerDelivery: {
+        type: Number,
+        required: true
     }
 },{timestamps: true});
 
 agentSchema.methods.incrementDelivery = function (additionalDelivery) {
     this.numberOfDeliveries += additionalDelivery;
+}
+
+agentSchema.methods.totalPaidAmount = function () {
+    return this.costPerDelivery * this.numberOfDeliveries;
 }
 
 
