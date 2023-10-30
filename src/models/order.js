@@ -14,7 +14,8 @@ const orderSchema = new mongoose.Schema({
     status: {
         type: String,
         required: true,
-        enum: ['Production', 'With agent', 'With customer']
+        enum: ['Production', 'With agent', 'With customer'],
+        default: "Production"
     },
     complaint: {
         type: String,
@@ -24,6 +25,10 @@ const orderSchema = new mongoose.Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    stickers: {
+        type: [String],
+        required : true
     }
     // packageUsed: {
 
