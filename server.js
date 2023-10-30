@@ -32,6 +32,9 @@ app.use('/api/password', passwordRouter);
 const agentRouter = require('./src/routes/agent.router');
 app.use('/api/agent', agentRouter);
 
+const orderRouter = require('./src/routes/order.router');
+app.use('/api/orders', orderRouter);
+
 
 
 app.listen(8080, () => {
