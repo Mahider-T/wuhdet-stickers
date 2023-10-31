@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const orderController = require('../controllers/order.controller');
+const {addStickerForm, addStickersToDatabase} = require('../controllers/order.controller');
+const {jwtCookies} = require('../middlewares/jwtCookie');
 
-router.post('/addSticker', orderController.addStickersToDatabase);
+router.get('/addSticker', addStickerForm);
+router.post('/addSticker', jwtCookies, addStickersToDatabase);
 
 module.exports = router;

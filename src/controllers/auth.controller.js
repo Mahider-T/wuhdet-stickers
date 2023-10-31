@@ -4,6 +4,8 @@ const sendEmail = require('../utils/sendEmail');
 const user = require('../models/user');
 const { errorMonitor } = require('nodemailer/lib/xoauth2');
 
+const cookieParser = require('cookie-parser')
+
 // @api/auth/register
 // @desc register user
 // @access public
@@ -45,8 +47,23 @@ const login = async (req, res) => {
             if(!user.isVerified) {
                 res.status(401).json({message: "User is not verified."})
             }
-    
-            res.status(200).json({token: user.generateJWT(), user: user});
+
+            const token = user.generateJWT();
+
+            res.cookie('token', token, {
+                httpOnly: true,
+                // secure: true,
+                // maxAge: 1000000,
+                // signed: true
+
+            });
+            // console.log(req.user);
+            return res.redirect('/api/orders/addSticker');
+            // res.status(200).json({message: "Logged in successfully!", user: user})
+
+            // res.status(200).json({token: user.generateJWT(), user: user});
+            // console.log(user.)
+            // console.log("the logged in user is: " + req.user);
             // res.status(200).json({message:"User authenticated successfully"})
         }).catch((error) => {
             res.status(500).json({message: error.message});

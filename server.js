@@ -1,9 +1,18 @@
 const express = require('express');
 const db = require('./src/config/config.db');
-
 const sendEmail = require('./src/utils/sendEmail');
+
+const cors = require('cors');
+const path = require("path");
+
 const app = express();
+
+app.use(cors());
+
 app.use(express.json());
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 
 const userRouter = require('./src/routes/authentication')
 app.use('/users', userRouter);
