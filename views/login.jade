@@ -1,0 +1,20 @@
+doctype html 
+
+html 
+
+    head
+        title = title 
+    body 
+        form(method = 'POST' action = "/api/auth/login")
+            legend Add Sticker
+
+            .form-group 
+                label(for='email') Email
+                input.form-control(type='text', name='email', value='', placeholder='email', autofocus=true)
+
+                label(for='password') Password
+                input.form-control(type='password', name='password', value='', placeholder='password', autofocus=true)
+                
+            .form-group
+                button.btn.btn-primary(type='submit') Login
+
