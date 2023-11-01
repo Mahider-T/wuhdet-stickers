@@ -3,13 +3,19 @@ const db = require('./src/config/config.db');
 const sendEmail = require('./src/utils/sendEmail');
 
 const cors = require('cors');
-const path = require("path");
+const path = require('path');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(cors());
 
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

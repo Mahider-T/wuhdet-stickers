@@ -32,14 +32,13 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try{
-        const {email} = req.body;
-        console.log(email);
+        const {email, password} = req.body;
     
         await User.findOne({email: email}).then((user) => {
             if(!user) {
-                res.status(401).json({message: `Account with email ${email} not found.`});
+                res.status(401).json({message: `Account with email '${email}' not found.`});
             }
-            const authenticate = user.comparePassword(req.body.password);
+            const authenticate = user.comparePassword(password);
             if(!authenticate) {
                 res.status(401).json({message: "Either email or password is incorrect"})
             }
@@ -50,7 +49,7 @@ const login = async (req, res) => {
 
             const token = user.generateJWT();
 
-            res.cookie('token', token, {
+            res.cookie("token", token, {
                 httpOnly: true,
                 // secure: true,
                 // maxAge: 1000000,
@@ -58,7 +57,9 @@ const login = async (req, res) => {
 
             });
             // console.log(req.user);
+            // console.log(token);
             return res.redirect('/api/orders/addSticker');
+            
             // res.status(200).json({message: "Logged in successfully!", user: user})
 
             // res.status(200).json({token: user.generateJWT(), user: user});
@@ -73,6 +74,12 @@ const login = async (req, res) => {
         res.status(500).json({message : error.message})
     }   
     
+}
+
+//login page render
+
+const loginForm = async (req, res) =>{
+    res.render('login');
 }
 
 
@@ -147,4 +154,4 @@ async function sendVerificationEmail(user, req, res){
     }
 }
 
-module.exports = {register, login, verify, resendToken};
+module.exports = {register, login, verify, resendToken, loginForm};
