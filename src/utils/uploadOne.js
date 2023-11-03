@@ -7,7 +7,7 @@ const cloudinary = require('../config/cloudinary');
 
 const dUri = new DatauriParser();
 
-function uploader(req) {
+function uploadOne(req) {
 
     return new Promise((resolve, reject) => {
         // const dUri = new Datauri();
@@ -27,4 +27,4 @@ function uploader(req) {
 
 
 
-module.exports = uploader;
+module.exports = uploadOne;

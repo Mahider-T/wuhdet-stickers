@@ -1,6 +1,6 @@
 // const agent = require('../models/agent');
 const Agent = require('../models/agent');
-const uploader = require('../utils/uploader');
+const uploader = require('../utils/uploadOne');
 
 const addAgent = async (req, res) => {
     try {

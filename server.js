@@ -7,6 +7,11 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
 
+const uploadMany = require('./src/utils/uploadMany');
+const multer = require('multer');
+
+const upload = multer().array('sticker', 2);
+
 const app = express();
 
 app.use(cookieParser());
@@ -23,19 +28,30 @@ app.set('view engine', 'jade');
 const userRouter = require('./src/routes/authentication')
 app.use('/users', userRouter);
 
-app.post("/sendEmail",async  (req, res) => {
-    try{
-        const email = req.body.email;
-        const subject = req.body.subject;
-        const text = req.body.text;
+// app.post("/sendEmail",async  (req, res) => {
+//     try{
+//         const email = req.body.email;
+//         const subject = req.body.subject;
+//         const text = req.body.text;
 
-        await sendEmail(email, subject, text);
-        res.status(200).send("email sent successfully");
-    } catch(e) {
-        res.status(500).send(e);
-        console.log(e)
-    }
+//         await sendEmail(email, subject, text);
+//         res.status(200).send("email sent successfully");
+//     } catch(e) {
+//         res.status(500).send(e);
+//         console.log(e)
+//     }
     
+// })
+
+app.post('/uploadMany', upload, async (req, res) => {
+    try{
+        console.log(req.files)
+        await uploadMany(req);
+        return res.send("images uploaded successfully")
+    }catch (error) {
+        console.log(error);
+        res.send(`Error is ${error}`);
+    }
 })
 
 const authRouter = require('./src/routes/auth.router')

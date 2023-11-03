@@ -1,5 +1,5 @@
 const Order = require('../models/order');
-const uploader = require('../utils/uploader');
+const uploader = require('../utils/uploadOne');
 
 const addStickersToDatabase = async (req, res) => {
 
