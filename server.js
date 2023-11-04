@@ -43,16 +43,37 @@ app.use('/users', userRouter);
     
 // })
 
+// app.post('/uploadMany', upload, async (req, res) => {
+//     try{
+//         // console.log(req.files)
+//         uploadMany(req).then((data) => {
+//             console.log(data);
+//         }).catch((error) => {
+//             console.log(error);
+//         });
+//         return res.send("images uploaded successfully")
+//     }catch (error) {
+//         console.log(error);
+//         res.send(`Error is ${error}`);
+//     }
+// })
+
 app.post('/uploadMany', upload, async (req, res) => {
-    try{
-        console.log(req.files)
-        await uploadMany(req);
-        return res.send("images uploaded successfully")
-    }catch (error) {
-        console.log(error);
-        res.send(`Error is ${error}`);
+    try {
+      uploadMany(req)
+        .then(data => {
+          console.log(data);
+          return res.send("Images uploaded successfully");
+        })
+        .catch(error => {
+          console.log(error);
+          res.status(500).send(`Error: ${error}`);
+        });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(`Error: ${error}`);
     }
-})
+  });
 
 const authRouter = require('./src/routes/auth.router')
 app.use('/api/auth', authRouter);
