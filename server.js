@@ -62,8 +62,9 @@ app.post('/uploadMany', upload, async (req, res) => {
     try {
       uploadMany(req)
         .then(data => {
-          console.log(data);
-          return res.send("Images uploaded successfully");
+        let theType = typeof data; 
+        //   console.log(data);
+          return res.json({data: data});
         })
         .catch(error => {
           console.log(error);

@@ -39,11 +39,12 @@ function uploadMany(req) {
         return new Promise((uploadResolve, uploadReject) => {
           let image = dUri.format(path.extname(file.originalname).toString(), file.buffer);
   
-          cloudinary.uploader.upload(image.content, (err, url) => {
+          cloudinary.uploader.upload(image.content, (err, data) => {
             if (err) {
               uploadReject(err);
             } else {
-              urls.push(url);
+                console.log(`pushed url is ${data.url}`);
+              urls.push(data.url);
               uploadResolve();
             }
           });
@@ -53,6 +54,7 @@ function uploadMany(req) {
       try {
         // Wait for all the upload promises to complete
         await Promise.all(uploadPromises);
+        // console.log(`Resolved promise is ${urls}`)
         resolve(urls);
       } catch (error) {
         reject(error);
