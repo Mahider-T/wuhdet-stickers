@@ -12,6 +12,7 @@ const multer = require('multer');
 
 const upload = multer().array('sticker', 2);
 
+
 const app = express();
 
 app.use(cookieParser());
@@ -60,6 +61,7 @@ app.use('/users', userRouter);
 
 app.post('/uploadMany', upload, async (req, res) => {
     try {
+      // console.log(req.files);
       uploadMany(req)
         .then(data => {
         let theType = typeof data; 
@@ -75,6 +77,15 @@ app.post('/uploadMany', upload, async (req, res) => {
       res.status(500).send(`Error: ${error}`);
     }
   });
+
+  // app.post('/api/orders/addSticker', uploadImages, async (req, res) => {
+  //       try{
+  //         console.log(req.files);
+  //         return res.send("Success")
+  //       }catch(error) {
+  //         return res.send("Failure");
+  //       }
+  // })
 
 const authRouter = require('./src/routes/auth.router')
 app.use('/api/auth', authRouter);
