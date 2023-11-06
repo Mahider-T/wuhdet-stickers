@@ -11,11 +11,16 @@ const orderSchema = new mongoose.Schema({
         required: true,
         ref: 'Agent'
     },
+    stickers: {
+        type: [String],
+        required : true
+    },
+
     status: {
         type: String,
         required: true,
-        enum: ['Production', 'With agent', 'With customer'],
-        default: "Production"
+        enum: ['Not started', 'Production', 'With agent', 'With customer'], 
+        default: "Not started" // status shall change to Production when we confirm that the user has paid
     },
     complaint: {
         type: String,
@@ -26,13 +31,23 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: false
     },
-    stickers: {
-        type: [String],
-        required : true
+    pricePerSticker: {
+        type:Number,
     }
-    // packageUsed: {
-
-    // }
 },{timestamps: true})
+
+orderSchema.methods.packageType = function() {
+    const numberOfStickers = stickers.length;
+
+    const priceToPackage = {
+
+    }
+    const packageCost = {
+        firstPackage : 50,
+        secondPackage : 45,
+        thirdPackage : 40 
+    }
+    
+}
 
 module.exports = mongoose.model('Orders', orderSchema);

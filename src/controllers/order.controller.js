@@ -21,16 +21,30 @@ const addStickersToDatabase = async (req, res) => {
               return res.json({ success: "False", message: "Only images are allowed" });
             }
           }
+        let imageLinks = [];
+
         await uploadMany(req)
             .then((data) => {
-                data.data.foreach(imageLink => {
-                    console.log(imageLink);
-                })
+                // console.log(data.length);
+                // console.log(imageLinks.length);
+                imageLinks = data;
+                console.log(imageLinks.length);
                 return res.json({success: "True", data: data})
             })
             .catch((error) => {
                 return res.json({success: "False", message: error.message});
-            })
+            });
+        const {agentId} = req.body;
+        const customerId = req.user.id;
+
+        const newOrder = new Order ({
+            customerId,
+            agentId,
+            stickers: imageLinks
+        })
+
+        newOrder.save();
+        
         // return res.json({files: req.files});
 
     } catch(error) {
