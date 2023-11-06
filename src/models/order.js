@@ -31,23 +31,23 @@ const orderSchema = new mongoose.Schema({
         required: true,
         default: false
     },
-    pricePerSticker: {
+    price: {
         type:Number,
     }
 },{timestamps: true})
 
-orderSchema.methods.packageType = function() {
+orderSchema.pre("save", function() {
     const numberOfStickers = stickers.length;
 
-    const priceToPackage = {
-
-    }
+    let totalPrice = 0;
     const packageCost = {
-        firstPackage : 50,
-        secondPackage : 45,
-        thirdPackage : 40 
+        5 : 150,
+        10 : 280,
+        20 : 540 
     }
+    this.price = packageCost[numberOfStickers];
+
     
-}
+})  
 
 module.exports = mongoose.model('Orders', orderSchema);
