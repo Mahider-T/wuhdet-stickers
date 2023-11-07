@@ -99,6 +99,9 @@ app.use('/api/agent', agentRouter);
 const orderRouter = require('./src/routes/order.router');
 app.use('/api/orders', orderRouter);
 
+const stickerRouter = require('./src/routes/stickers.router');
+app.use('/api/stickers', stickerRouter);
+
 
 
 app.listen(8080, () => {

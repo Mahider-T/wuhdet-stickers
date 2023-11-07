@@ -35,6 +35,8 @@ function uploadMany(req) {
       const urls = [];
   
       // Create an array of promises for the uploads
+
+      // Uploads images to cloudinary and returns links to each image as an array
       const uploadPromises = files.map(file => {
         return new Promise((uploadResolve, uploadReject) => {
           let image = dUri.format(path.extname(file.originalname).toString(), file.buffer);

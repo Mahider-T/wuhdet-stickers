@@ -4,7 +4,7 @@ const {addStickerForm, addStickersToDatabase} = require('../controllers/order.co
 const {jwtCookies} = require('../middlewares/jwtCookie');
 
 const multer = require('multer');
-const uploadImages = multer().array('images');
+const uploadImages = multer().array('image');
 
 
 router.get('/addSticker', addStickerForm);
