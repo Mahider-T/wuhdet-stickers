@@ -1,5 +1,6 @@
 const sticker = require('../models/sticker.js');
 const Sticker = require('../models/sticker.js');
+const { get } = require('../routes/stickers.router.js');
 const uploadMany = require('../utils/uploadMany');
 
 const uploadOne = require('../utils/uploadOne');
@@ -17,7 +18,8 @@ const uploadSticker = async(req,res) => {
             // console.log(`The url is ${url.url}`);
             const newSticker = new Sticker({
                 link : url.url,
-                tag : req.body.tag
+                tag : req.body.tag,
+                name: req.body.name
             })
 
             await newSticker.save();
@@ -59,14 +61,16 @@ const uploadSticker = async(req,res) => {
 const getAllStickers = async (req, res) => {
     
     try{
-        const allTheLinks = await Sticker.find({}, 'link')
-        return res.json({success: "True", data: allTheLinks});
+        const allTheLinks = await Sticker.find({})
+        return res.render('home', {allTheLinks});
+        return allTheLinks;
+        // return res.json({success: "True", data: allTheLinks});
     }catch(error) {
         return res.json({success: "False", error: error.message});
+        // return error;
     }
 
-
-}
+};
 
 //Get stickers by tag
 //basic
@@ -86,4 +90,20 @@ const getStickersByTag = async (req, res) =>{
     }
 }
 
-module.exports = {uploadSticker, getAllStickers, getStickersByTag};
+const getStickerById = async (req, res) => {
+    try{
+        const id = req.params.id;
+        const result = await Sticker.find({_id: id})
+        console.log(result)
+        res.render('eachItem', { result });
+    }catch(error){
+        console.log(error)
+        res.status(500).json({success: "False", error: error.message});
+    }
+}
+
+// const homePage = (req, res) => {
+//     return res.render('home', { getAllStickers })
+// }
+
+module.exports = {uploadSticker, getAllStickers, getStickersByTag, getStickerById};

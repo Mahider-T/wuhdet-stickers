@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title E-commerce Website
+  body
+    header
+      h1 Welcome to sticker shop
+    main
+      h2 Featured Items
+      ul
+        each item in allTheLinks
+          li
+            h3= item.name
+            a(href= `/api/stickers/getStickerById/${item.id}`) View Details
+    footer
+      p © 2023 stickers
