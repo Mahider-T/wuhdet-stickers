@@ -9,13 +9,14 @@ const orderSchema = new mongoose.Schema({
     agentId : {
         //on the front end, the value attribute of the input should be the id of the corresponding agent
         //but what is displayed to the user it the relative location of the agent
-        type: mongoose.Schema.Types.ObjectId, 
+        type: mongoose.Schema.Types.ObjectId,
+        default: null, 
         required: true,
         ref: 'Agent'
     },
     stickers: {
         type: [{
-            id: mongoose.Types.Schema.ObjectId,
+            id: mongoose.Schema.Types.ObjectId,
             // id: String,
             quantity : Number,
             dimension: String,
