@@ -11,6 +11,7 @@ exports.jwtCookies = (req, res, next) => {
         // console.log(userPayload);
         // userId = userPayload.id;
         req.user = userPayload;
+        
         next();
 // 
     }catch(error) {
