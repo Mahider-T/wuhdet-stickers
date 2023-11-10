@@ -102,9 +102,16 @@ const getStickerById = async (req, res) => {
     }
 }
 
+// In the homepage
+    //4 stickers from each tag should be displayed (featured)
+    //below each region(divided by tag) there should be a see more button that shows 
+    //the paginated list of all stickers in that given type or genre
+//Get the most recent 4 stickers from each tag
 
-// const homePage = (req, res) => {
-//     return res.render('home', { getAllStickers })
-// }
+const stickersByTags = async(req, res) => {
+    const stickersWithTag = await sticker.find({tag: {$in: tag}}, 'link');
+    const fromComedy = await sticker.find({tag: {$in: 'Comedy'}, })
+}
+
 
 module.exports = {uploadSticker, getAllStickers, getStickersByTag, getStickerById};
