@@ -93,14 +93,15 @@ const getStickersByTag = async (req, res) =>{
 const getStickerById = async (req, res) => {
     try{
         const id = req.params.id;
-        const result = await Sticker.find({_id: id})
+        const result = await Sticker.findOne({_id: id})
         console.log(result)
-        res.render('eachItem', { result });
+        res.render('eachItem', {result: result});
     }catch(error){
         console.log(error)
         res.status(500).json({success: "False", error: error.message});
     }
 }
+
 
 // const homePage = (req, res) => {
 //     return res.render('home', { getAllStickers })

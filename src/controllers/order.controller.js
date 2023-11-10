@@ -58,5 +58,29 @@ const addStickerForm = async (req, res) =>{
     res.render('addSticker');
 }
 
-module.exports = {addStickersToDatabase, addStickerForm};
+const createOrder = async (req, res) => {
+    try{
+          // const customerId = req.user.Id; 
+        let {customerId, agentId, stickers} = req.body;
+
+        const newOrder = new Order({
+            customerId,
+            agentId,
+            stickers
+        });
+
+        await newOrder.save();
+        return res.status(200).json({success: 'True', data: newOrder});
+    // let {stickers} = req.body;
+    }catch(error) {
+        res.status(500).json({
+            error: error.message
+        })
+    }
+  
+
+
+}
+
+module.exports = {addStickersToDatabase, addStickerForm, createOrder};
 

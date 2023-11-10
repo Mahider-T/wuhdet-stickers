@@ -11,17 +11,43 @@ const orderSchema = new mongoose.Schema({
         //but what is displayed to the user it the relative location of the agent
         type: mongoose.Schema.Types.ObjectId,
         default: null, 
-        required: true,
+        // required: true,
         ref: 'Agent'
     },
+
+    //each order contains:
+        //the item id,
+        //dimension
+        //quantity
+    //the POST request should look something like this
+    // [
+    //     {
+    //         id,
+    //         dimension,
+    //         quantity,
+    //         price
+    //     },
+    //     {
+    //         id,
+    //         dimension,
+    //         quantity,
+    //         price
+    //     }
+    // ]
+    //everytime an item is added to the cart,
+        //check if that id exists in the cart
+            //if it does, check if the current dimension and the dimension of the order in the cart are the same
+                //if they are the same, increment
+                //else create a new order json with the id, dimension, quantity and price and send it to the server  
     stickers: {
         type: [{
             id: mongoose.Schema.Types.ObjectId,
             // id: String,
             quantity : Number,
             dimension: String,
+            price: Number
         }],
-        required : true
+        // required : true
     },
 
     status: {
@@ -42,23 +68,27 @@ const orderSchema = new mongoose.Schema({
     }
 },{timestamps: true})
 
-orderSchema.pre("save", function() {
-    const numberOfStickers = stickers.length;
+// orderSchema.pre("save", function() {
+//     const numberOfStickers = stickers.length;
 
-    let totalPrice = 0;
-    const packageCost = {
-        5 : 150,
-        10 : 280,
-        20 : 540 
-    }
-    this.price = packageCost[numberOfStickers];
+//     let totalPrice = 0;
+//     const packageCost = {
+//         5 : 150,
+//         10 : 280,
+//         20 : 540 
+//     }
+//     this.price = packageCost[numberOfStickers];
 
     
-})  
+// })  
 
-orderSchema.methods.createOrder = function() {
-
-}
+orderSchema.pre("save", function()  {
+    let totalPrice = 0;
+    this.stickers.forEach((order) => {
+        totalPrice += order.price;
+    })
+    this.price = totalPrice;
+})
 
 // orderSchema.pre("save", function(){
     // const thisOrder = this;

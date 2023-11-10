@@ -1,12 +1,13 @@
 doctype html
 html
   head
-    title result.name
+    title= result.name
   body
-    h1 result.name
-    img(src = result.link, alt = result.name )
-    p Image Name: result.name
-    p Image Tags:
-    //-   ul
-    //-     each tag in theSticker.tag
-    //-       li= tag
+    h1= result.name
+    img(src=result.link, alt=result.name, width='300', height='300')
+    p Image Name: #{result.name}
+    p Image Tags: 
+      ul
+        each tag in result.tag
+          li= tag
+
