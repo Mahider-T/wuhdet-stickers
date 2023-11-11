@@ -1,16 +1,77 @@
+// home.pug
+
 doctype html
-html
+html(lang="en")
   head
-    title E-commerce Website
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title My Sticker Collection
+    style
+      | .sticker-container {
+      |   display: flex;
+      |   justify-content: center;
+      |   flex-wrap: wrap;
+      |   gap: 40px;
+      | }
   body
-    header
-      h1 Welcome to sticker shop
-    main
-      h2 Featured Items
-      ul
-        each item in allTheLinks
-          li
-            h3= item.name
-            a(href= `/api/stickers/getStickerById/${item.id}`) View Details
-    footer
-      p © 2023 stickers
+    h3 From Music 
+    div.sticker-container
+      each sticker in fromMusic
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+    
+    h3 From Celebrities
+    div.sticker-container
+      each sticker in fromCelebrity
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+    
+    h3 From Quotes
+    div.sticker-container
+      each sticker in fromQuote
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+    
+    h3 From Religion
+    div.sticker-container
+      each sticker in fromReligion
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+
+     h3 From Comedy
+    div.sticker-container
+      each sticker in fromComedy
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+    
+    h3 From Tech
+    div.sticker-container
+      each sticker in fromTech
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
+    div.sticker-container      
+      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+  footer
+    p © 2023 stickers

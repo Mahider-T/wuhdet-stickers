@@ -11,7 +11,7 @@ const stickerSchema = new mongoose.Schema({
     },
     tag: {
         type: [String],
-        enum : ["Comedy", "Music", "Quotes", "Artist", "Books", "Trending", "Religion"],
+        enum : ["Comedy", "Music", "Quote", "Celebrity", "Book", "Tech", "Religion"],
         required : true
     }
 }, {timestamps: true})

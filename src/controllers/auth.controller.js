@@ -59,7 +59,7 @@ const login = async (req, res) => {
             // console.log(req.user);
             // console.log(token);
             // return res.redirect('/api/orders/addSticker');
-            return res.redirect('/api/stickers/getAllStickers')
+            return res.redirect('/api/stickers/getStickersByTags')
             
             // res.status(200).json({message: "Logged in successfully!", user: user})
 
