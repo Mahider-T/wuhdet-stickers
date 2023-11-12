@@ -22,7 +22,7 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Music`)  See More >>
     
     h3 From Celebrities
     div.sticker-container
@@ -32,7 +32,7 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Celebrity`)  See More >>
     
     h3 From Quotes
     div.sticker-container
@@ -42,7 +42,7 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Quote`)  See More >>
     
     h3 From Religion
     div.sticker-container
@@ -52,7 +52,7 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Religion`)  See More >>
 
      h3 From Comedy
     div.sticker-container
@@ -62,7 +62,7 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Comedy`)  See More >>
     
     h3 From Tech
     div.sticker-container
@@ -72,6 +72,6 @@ html(lang="en")
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name
     div.sticker-container      
-      a(href = `/api/stickers/getPaginatedMusic`)  See More >>
+      a(href = `/api/stickers/getStickersByTag?tag=Tech`)  See More >>
   footer
     p © 2023 stickers

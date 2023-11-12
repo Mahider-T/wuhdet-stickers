@@ -75,20 +75,21 @@ const getAllStickers = async (req, res) => {
 //Get stickers by tag
 //basic
 
-// const getStickersByTag = async (req, res) =>{
-//     try{
+const getStickersByTag = async (req, res) =>{
+    try{
 
-//         const {tag} = req.body;
+        const tag = req.query.tag;
+        console.log(tag);
 
-//         const stickersWithTag = await sticker.find({tag: {$in: tag}}, 'link');
+        const stickersWithTag = await sticker.find({tag: {$in: tag}});
 
-//         // console.log(stickersWithTag.length);
+        console.log(stickersWithTag.length);
 
-//         return res.json({success: "True", data: stickersWithTag});
-//     }catch(error) {
-//         return res.json({success: "False", error: error.message});
-//     }
-// }
+        return res.json({success: "True", data: stickersWithTag});
+    }catch(error) {
+        return res.json({success: "False", error: error.message});
+    }
+}
 
 const getStickerById = async (req, res) => {
     try{
@@ -108,7 +109,7 @@ const getStickerById = async (req, res) => {
     //the paginated list of all stickers in that given type or genre
 //Get the most recent 4 stickers from each tag
 
-const getStickersByTags = async(req, res) => {
+const getFeaturedStickers = async(req, res) => {
     try{
         // const stickersWithTag = await sticker.find({tag: {$in: tag}}, 'link');
 
@@ -136,29 +137,11 @@ const getStickersByTags = async(req, res) => {
         .sort({createdAt: -1})
         .limit(4)
 
-        //  return res.render('home', {
-        //     fromComedy,
-        //     fromMusic,
-        //     fromQuote,
-        //     fromReligion,
-        //     fromCelebrity,
-        //     fromTech
-        // })
-        // let sent = fromComedy[0];
          res.render('home', {fromMusic, fromCelebrity, fromQuote, fromReligion, fromComedy, fromTech});
-        // res.send(fromMusic);
-        // res.status(200).json({
-            // fromComedy,
-            // fromMusic,
-            // fromQuote,
-            // fromReligion,
-            // fromCelebrity,
-            // fromTech
-        // })
     }catch(error) {
         res.status(500).json({success: "Fasle", error: error.message})
     }
 }
 
 
-module.exports = {uploadSticker, getAllStickers, getStickersByTags, getStickerById};
+module.exports = {uploadSticker, getAllStickers, getFeaturedStickers, getStickerById, getStickersByTag};
