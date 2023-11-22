@@ -29,20 +29,21 @@ app.set('view engine', 'pug');
 const userRouter = require('./src/routes/authentication')
 app.use('/users', userRouter);
 
-// app.post("/sendEmail",async  (req, res) => {
-//     try{
-//         const email = req.body.email;
-//         const subject = req.body.subject;
-//         const text = req.body.text;
+app.post("/sendEmail",async  (req, res) => {
+    try{
+        const email = req.body.email;
+        const subject = req.body.subject;
+        const text = req.body.text;
+        console.log(` ${email} ${subject} and ${text}`)
 
-//         await sendEmail(email, subject, text);
-//         res.status(200).send("email sent successfully");
-//     } catch(e) {
-//         res.status(500).send(e);
-//         console.log(e)
-//     }
+        await sendEmail(email, subject, text);
+        res.status(200).send("email sent successfully");
+    } catch(e) {
+        res.status(500).send(e);
+        console.log(e)
+    }
     
-// })
+})
 
 // app.post('/uploadMany', upload, async (req, res) => {
 //     try{
