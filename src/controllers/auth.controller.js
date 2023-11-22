@@ -36,15 +36,15 @@ const login = async (req, res) => {
     
         await User.findOne({email: email}).then((user) => {
             if(!user) {
-                res.status(401).json({message: `Account with email '${email}' not found.`});
+                return res.status(401).json({message: `Account with email '${email}' not found.`});
             }
             const authenticate = user.comparePassword(password);
             if(!authenticate) {
-                res.status(401).json({message: "Either email or password is incorrect"})
+                return res.status(401).json({message: "Either email or password is incorrect"})
             }
             
             if(!user.isVerified) {
-                res.status(401).json({message: "User is not verified."})
+                return res.status(401).json({message: "User is not verified."})
             }
 
             const token = user.generateJWT();
@@ -77,8 +77,12 @@ const login = async (req, res) => {
     
 }
 
-//login page render
+// Register page render
 
+const registerForm = async (req, res) => {
+    res.render('register')
+}
+//Login page render
 const loginForm = async (req, res) =>{
     res.render('login');
 }
@@ -155,4 +159,4 @@ async function sendVerificationEmail(user, req, res){
     }
 }
 
-module.exports = {register, login, verify, resendToken, loginForm};
+module.exports = {register, login, verify, resendToken, registerForm, loginForm};
