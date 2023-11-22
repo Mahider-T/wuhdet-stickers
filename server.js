@@ -102,7 +102,7 @@ app.use('/api/orders', orderRouter);
 const stickerRouter = require('./src/routes/stickers.router');
 app.use('/api/stickers', stickerRouter);
 
-
+const PORT = process.env.PORT || 8080 || 3000;
 
 app.listen(8080, () => {
     console.log("Listening on port 8080")
