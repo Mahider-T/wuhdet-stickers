@@ -1,0 +1,22 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title #{tag}
+    style
+      | .sticker-container {
+      |   display: flex;
+      |   justify-content: center;
+      |   flex-wrap: wrap;
+      |   gap: 40px;
+      | }
+  body
+    h3 
+    div.sticker-container
+      each sticker in stickersWithTag
+        div
+          img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
+          button(type="button") Add to cart
+          h2
+            a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name

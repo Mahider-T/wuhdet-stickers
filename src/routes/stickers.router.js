@@ -11,6 +11,6 @@ Router.post('/uploadSticker', multerSticker, uploadSticker);
 Router.get('/getAllStickers', getAllStickers);
 Router.get('/getStickerById/:id', getStickerById);
 Router.get('/', getFeaturedStickers);
-Router.get('/getStickersByTag', getStickersByTag);
+Router.get('/getStickersByTag/:tag', getStickersByTag);
 
 module.exports = Router;

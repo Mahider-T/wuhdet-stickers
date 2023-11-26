@@ -78,14 +78,15 @@ const getAllStickers = async (req, res) => {
 const getStickersByTag = async (req, res) =>{
     try{
 
-        const tag = req.query.tag;
+        const tag = req.params.tag;
         console.log(tag);
 
         const stickersWithTag = await sticker.find({tag: {$in: tag}});
 
         console.log(stickersWithTag.length);
 
-        return res.json({success: "True", data: stickersWithTag});
+        // return res.json({success: "True", data: stickersWithTag});
+        return res.render("eachGenre", { tag, stickersWithTag });
     }catch(error) {
         return res.json({success: "False", error: error.message});
     }
