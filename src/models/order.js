@@ -15,30 +15,6 @@ const orderSchema = new mongoose.Schema({
         ref: 'Agent'
     },
 
-    //each order contains:
-        //the item id,
-        //dimension
-        //quantity
-    //the POST request should look something like this
-    // [
-    //     {
-    //         id,
-    //         dimension,
-    //         quantity,
-    //         price
-    //     },
-    //     {
-    //         id,
-    //         dimension,
-    //         quantity,
-    //         price
-    //     }
-    // ]
-    //everytime an item is added to the cart,
-        //check if that id exists in the cart
-            //if it does, check if the current dimension and the dimension of the order in the cart are the same
-                //if they are the same, increment
-                //else create a new order json with the id, dimension, quantity and price and send it to the server  
     stickers: {
         type: [{
             id: mongoose.Schema.Types.ObjectId,
@@ -67,20 +43,7 @@ const orderSchema = new mongoose.Schema({
         type:Number,
     }
 },{timestamps: true})
-
-// orderSchema.pre("save", function() {
-//     const numberOfStickers = stickers.length;
-
-//     let totalPrice = 0;
-//     const packageCost = {
-//         5 : 150,
-//         10 : 280,
-//         20 : 540 
-//     }
-//     this.price = packageCost[numberOfStickers];
-
-    
-// })  
+ 
 
 orderSchema.pre("save", function()  {
     let totalPrice = 0;
@@ -90,18 +53,5 @@ orderSchema.pre("save", function()  {
     this.price = totalPrice;
 })
 
-// orderSchema.pre("save", function(){
-    // const thisOrder = this;
-    //Let user choose agent
-    //Let the user choose a location(agent)
-    //What the user sees is the location
-    //what is sent to the backend is the stings with pattern 'location*'
-    //these strings with the given pattern are matched to an agent with the following object
-    // const agentMapping = {
-    //     location1 :  `653a61fce7f34cae19f4df34` // this is the id of the agent that works on location1
-    // }
-    // thisOrder.agentId = agentMapping[thisOrder.agentId];
-
-// })
 
 module.exports = mongoose.model('Orders', orderSchema);

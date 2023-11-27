@@ -1,17 +1,10 @@
 const express = require('express');
-const db = require('./src/config/config.db');
 const sendEmail = require('./src/utils/sendEmail');
 
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser')
-
-const uploadMany = require('./src/utils/uploadMany');
-const multer = require('multer');
-
-const upload = multer().array('sticker', 2);
-
 
 const app = express();
 
@@ -44,49 +37,6 @@ app.post("/sendEmail",async  (req, res) => {
     }
     
 })
-
-// app.post('/uploadMany', upload, async (req, res) => {
-//     try{
-//         // console.log(req.files)
-//         uploadMany(req).then((data) => {
-//             console.log(data);
-//         }).catch((error) => {
-//             console.log(error);
-//         });
-//         return res.send("images uploaded successfully")
-//     }catch (error) {
-//         console.log(error);
-//         res.send(`Error is ${error}`);
-//     }
-// })
-
-app.post('/uploadMany', upload, async (req, res) => {
-    try {
-      // console.log(req.files);
-      uploadMany(req)
-        .then(data => {
-        let theType = typeof data; 
-        //   console.log(data);
-          return res.json({data: data});
-        })
-        .catch(error => {
-          console.log(error);
-          res.status(500).send(`Error: ${error}`);
-        });
-    } catch (error) {
-      console.log(error);
-      res.status(500).send(`Error: ${error}`);
-    }
-  });
-
-  // app.post('/api/orders/addSticker', uploadImages, async (req, res) => {
-  //       try{
-  //         console.log(req.files);
-  //         return res.send("Success")
-  //       }catch(error) {
-  //         return res.send("Failure");
-  //       }
-  // })
 
 const authRouter = require('./src/routes/auth.router')
 app.use('/api/auth', authRouter);
