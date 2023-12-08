@@ -1,6 +1,4 @@
 const express = require('express');
-const sendEmail = require('./src/utils/sendEmail');
-
 const cors = require('cors');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -22,22 +20,6 @@ app.set('view engine', 'pug');
 const userRouter = require('./src/routes/authentication')
 app.use('/users', userRouter);
 
-app.post("/sendEmail",async  (req, res) => {
-    try{
-        const email = req.body.email;
-        const subject = req.body.subject;
-        const text = req.body.text;
-        console.log(` ${email} ${subject} and ${text}`)
-
-        await sendEmail(email, subject, text);
-        res.status(200).send("email sent successfully");
-    } catch(e) {
-        res.status(500).send(e);
-        console.log(e)
-    }
-    
-})
-
 const authRouter = require('./src/routes/auth.router')
 app.use('/api/auth', authRouter);
 
@@ -46,9 +28,6 @@ app.use('/api/password', passwordRouter);
 
 const agentRouter = require('./src/routes/agent.router');
 app.use('/api/agent', agentRouter);
-
-const orderRouter = require('./src/routes/order.router');
-app.use('/api/orders', orderRouter);
 
 const stickerRouter = require('./src/routes/stickers.router');
 app.use('/api/stickers', stickerRouter);

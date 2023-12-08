@@ -6,7 +6,6 @@ const Router = express.Router();
 const multer = require('multer');
 const multerSticker = multer().single('sticker');
 
-// Router.get('/',homePage);
 Router.post('/uploadSticker', multerSticker, uploadSticker);
 Router.get('/getAllStickers', getAllStickers);
 Router.get('/getStickerById/:id', getStickerById);

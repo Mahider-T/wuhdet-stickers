@@ -56,17 +56,7 @@ const login = async (req, res) => {
                 // signed: true
 
             });
-            // console.log(req.user);
-            // console.log(token);
-            // return res.redirect('/api/orders/addSticker');
             return res.redirect('/api/stickers/')
-            
-            // res.status(200).json({message: "Logged in successfully!", user: user})
-
-            // res.status(200).json({token: user.generateJWT(), user: user});
-            // console.log(user.)
-            // console.log("the logged in user is: " + req.user);
-            // res.status(200).json({message:"User authenticated successfully"})
         }).catch((error) => {
             res.status(500).json({message: error.message});
         }) 
