@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 const mongoURI = process.env.MONGO_LOCAL_CONN_URL;
-
-// const mongoURI = "Wrong connection string"
 console.log(mongoURI);
 
 mongoose.connect(mongoURI, {
