@@ -9,8 +9,6 @@ mongoose.connect(mongoURI, {
     useUnifiedTopology: true
 })
 .then(() => console.log("Connected to mongodb successfully"))
-.catch((error) => console.log("Error connecting to MognoDB", error))
-console.log("Connected to MongoDB successfully");
-
+.catch((error) => console.log("Error connecting to MognoDB", error));
 
 module.exports = mongoose;

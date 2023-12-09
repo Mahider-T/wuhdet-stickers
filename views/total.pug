@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title Checkout 
+  body
+    main
+      h1 Thank you for shopping with us
+      h3 Your total is ETB #{price}
+      
+      p Please enter your card details below
+      form(method='POST', action='/api/orders/payment/verifyPayment')
+        label(for='card') Card number
+
+        br
+
+        input.form-control(type='text', name='card', placeholder='Enter your card info here')
+
+        button(type='submit') Pay
+
+        p #{error}
+    footer
+      p © 2023 stickers

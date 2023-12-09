@@ -16,9 +16,18 @@ const orderSchema = new mongoose.Schema({
 
     stickers: {
         type: [{
-            id: mongoose.Schema.Types.ObjectId,
-            quantity : Number,
-            dimension: String,
+            _id: {
+                type: mongoose.Schema.Types.ObjectId,
+                required : true
+            },
+            quantity : {
+                type : Number,
+                required : true
+            },
+            dimension: {
+                type: String,
+                required: true
+            }
         }],
         required : true
     },
@@ -37,8 +46,24 @@ const orderSchema = new mongoose.Schema({
         default: false
     },
     price: {
-        type:Number,
+        type: Number,
+        default: 0,
+        required: true
     }
 },{timestamps: true})
+
+orderSchema.pre('save', function() {
+    const singleStickerPrice = {
+        small : 50,
+        medium : 70,
+        large : 100
+    }
+    let totalPrice = 0;
+    this.stickers.forEach(function(sticker){
+        totalPrice += singleStickerPrice[sticker.dimension] * sticker.quantity;
+    })
+    this.price = totalPrice;
+        console.log(`The total price is ${totalPrice}`);
+} )
 
 module.exports = mongoose.model('Orders', orderSchema);

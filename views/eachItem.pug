@@ -10,16 +10,18 @@ html
       ul
         each tag in result.tag
           li= tag
-    label(for="quantity") Quantity:
-    input(type="number" name="quantity" id="quantity" min="1" value="1")
-    
     br
     
-    form(method = 'POST' action = "/api/orders/" + stickerParam)
+    form(method = 'POST' action = `/api/orders/${stickerParam}` )
+      label(for="quantity") Quantity:
+      input(type="number" name="quantity" id="quantity" min="1" value="1")
+
+      br
+      
       label(for="dimension") Dimension:
       select(name="dimension" id="dimension") 
         option(value="small") 10 cm x 10 cm
-        option(value="medium") 20 cm x 2 cm
+        option(value="medium") 20 cm x 20 cm
         option(value="large") 30 cm x 30 cm
 
       br

@@ -108,7 +108,7 @@ const getFeaturedStickers = async(req, res) => {
 
     }catch(error) {
 
-        res.status(500).json({success: "Fasle", error: error.message})
+        res.status(500).json({success: "False", error: error.message})
     }
 }
 
