@@ -6,4 +6,8 @@ html
         title Login
     body
         h1 Thank you for shopping from us! 
-        
+        img(src=theSticker.link alt="Image alt text")
+        p Dimension chosen : #{order.stickers[0].dimension}
+        p Number of stickers : #{order.stickers[0].quantity}
+        p Paid amount : #{order.price}
+            

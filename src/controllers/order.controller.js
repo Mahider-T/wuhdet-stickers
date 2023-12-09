@@ -1,4 +1,5 @@
 const Order = require('../models/order');
+const Sticker = require('../models/sticker');
 
 const { isValidCreditCard } = require('../utils/verifyCardUtils');
 
@@ -60,22 +61,25 @@ const verifyCard = async(req, res) => {
 
     const { card } = req.body;
     const orderId = req.params.orderId;
-    console.log(card);
 
-    let error = "Wrong card";
+    let order = await Order.findOne({
+        _id : orderId
+    });
+
+    console.log(card);
+    const theSticker = await Sticker.findOne(order.stickers[0]._id);
+    console.log(theSticker)
     const cardIsValid = isValidCreditCard(Number(card));
     console.log(cardIsValid);
     try{
         if(cardIsValid) {
-            return res.render("success");
+            const result = await Order.updateOne(
+                { _id: orderId },
+                { $set: { status: 'Production', hasPaid: true} }
+            );
+            return res.render("success",{order, theSticker});
         } 
         let error = "Your card number is invalid. Please try again.";
-
-        const orderId = req.params.orderId;
-
-        let order = await Order.findOne({
-            _id : orderId
-        }, "price");
 
         price = order.price;
         return res.render("total", {price, orderId, error});
