@@ -8,7 +8,7 @@ html
       h3 Your total is ETB #{price}
       
       p Please enter your card details below
-      form(method='POST', action='/api/orders/payment/verifyPayment')
+      form(method='POST', action=`/api/orders/payment/verifyPayment/${orderId}`)
         label(for='card') Card number
 
         br

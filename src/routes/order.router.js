@@ -7,6 +7,6 @@ const bodyParser = require("body-parser");
 
 Router.post('/:stickerId', jwtCookies, addToCart);
 Router.get("/checkout/:orderId", displayTotal);
-Router.post("/payment/verifyPayment", verifyCard)
+Router.post("/payment/verifyPayment/:orderId", verifyCard)
 
 module.exports = Router;

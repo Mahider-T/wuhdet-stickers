@@ -50,7 +50,7 @@ const displayTotal = async(req, res, error) => {
         }, "price");
 
         price = order.price;
-        return res.render("total", {price});
+        return res.render("total", {price, orderId});
     }catch(error){
         return res.status(500).json({success: "False", message: error.message})
     }
@@ -63,21 +63,24 @@ const verifyCard = async(req, res) => {
     console.log(card);
 
     let error = "Wrong card";
-    const cardIsValid = isValidCreditCard(card);
+    const cardIsValid = isValidCreditCard(Number(card));
     console.log(cardIsValid);
     try{
         if(cardIsValid) {
             return res.render("success");
         } 
-        // let error = "Your card is invalid";
-        // let order = await Order.findOne({
-        //     _id : orderId
-        // }, "price");
+        let error = "Your card number is invalid. Please try again.";
 
-        // price = order.price;
-        // return res.render("total", {price, error});
+        const orderId = req.params.orderId;
 
-        return displayTotal(error);
+        let order = await Order.findOne({
+            _id : orderId
+        }, "price");
+
+        price = order.price;
+        return res.render("total", {price, orderId, error});
+
+        // return displayTotal(error);
     
     }catch(error) {
         res.status(500).json({success : "False", message: error.message});
