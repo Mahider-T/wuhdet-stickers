@@ -1,10 +1,6 @@
 const User = require('../models/user');
 const Token = require('../models/token')
 const sendEmail = require('../utils/sendEmail');
-const user = require('../models/user');
-const { errorMonitor } = require('nodemailer/lib/xoauth2');
-
-const cookieParser = require('cookie-parser')
 
 // @api/auth/register
 // @desc register user

@@ -34,6 +34,9 @@ app.use('/api/agent', agentRouter);
 const stickerRouter = require('./src/routes/stickers.router');
 app.use('/api/stickers', stickerRouter);
 
+const orderRouter = require('./src/routes/order.router');
+app.use('/api/orders', orderRouter);
+
 const PORT = process.env.PORT || 8080 || 3000;
 
 app.listen(8080, () => {

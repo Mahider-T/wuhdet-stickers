@@ -1,8 +1,4 @@
-const sticker = require('../models/sticker.js');
 const Sticker = require('../models/sticker.js');
-const { get } = require('../routes/stickers.router.js');
-const uploadMany = require('../utils/uploadMany');
-
 const uploadOne = require('../utils/uploadOne');
 
 
@@ -32,73 +28,42 @@ const uploadSticker = async(req,res) => {
         res.json({error: error.message});
     }
 
-    // let stickerUrls = [];
-
-    // uploadMany(req).then((data) => {
-    //     stickerUrls = data;
-
-    //     return res.json({success: "True", data: data});
-    // }).catch((error) => {
-    //     return res.json({success: "False", error: error.message});
-    // })
-
-
-
-    // stickerUrls.forEach(sticker => {
-
-    //     const newSticker = new Sticker({
-    //         link: sticker,
-    //         tag: req.body.tag,            
-    //     })
-        
-    // }); 
-
 }
-
-//Get all stickers from database
-//basic
 
 const getAllStickers = async (req, res) => {
     
     try{
         const allTheLinks = await Sticker.find({})
-        // return res.render('home', {allTheLinks});
-        // return allTheLinks;
         return res.json({success: "True", data: allTheLinks});
     }catch(error) {
         return res.json({success: "False", error: error.message});
-        // return error;
     }
 
 };
 
-//Get stickers by tag
-//basic
 
 const getStickersByTag = async (req, res) =>{
     try{
 
         const tag = req.params.tag;
-        console.log(tag);
-
-        const stickersWithTag = await sticker.find({tag: {$in: tag}});
-
-        console.log(stickersWithTag.length);
-
-        // return res.json({success: "True", data: stickersWithTag});
+        const stickersWithTag = await Sticker.find({tag: {$in: tag}});
         return res.render("eachGenre", { tag, stickersWithTag });
+
     }catch(error) {
+
         return res.json({success: "False", error: error.message});
     }
 }
 
 const getStickerById = async (req, res) => {
     try{
+
         const id = req.params.id;
         const result = await Sticker.findOne({_id: id})
-        console.log(result)
-        res.render('eachItem', {result: result});
+        res.render('eachItem', {result: result, stickerParam : id});
+
     }catch(error){
+
         console.log(error)
         res.status(500).json({success: "False", error: error.message});
     }
@@ -111,35 +76,38 @@ const getStickerById = async (req, res) => {
 //Get the most recent 4 stickers from each tag
 
 const getFeaturedStickers = async(req, res) => {
+
     try{
-        // const stickersWithTag = await sticker.find({tag: {$in: tag}}, 'link');
+        // const stickersWithTag = await Sticker.find({tag: {$in: tag}}, 'link');
 
-        const fromComedy = await sticker.find({tag: {$in: 'Comedy'}})
+        const fromComedy = await Sticker.find({tag: {$in: 'Comedy'}})
         .sort({createdAt: -1})
         .limit(4)
 
-        const fromMusic = await sticker.find({tag: {$in: 'Music'}})
+        const fromMusic = await Sticker.find({tag: {$in: 'Music'}})
         .sort({createdAt: -1})
         .limit(4)
 
-        const fromQuote = await sticker.find({tag: {$in: 'Quote'}})
+        const fromQuote = await Sticker.find({tag: {$in: 'Quote'}})
         .sort({createdAt: -1})
         .limit(4)
 
-        const fromReligion = await sticker.find({tag: {$in: 'Religion'}})
+        const fromReligion = await Sticker.find({tag: {$in: 'Religion'}})
         .sort({createdAt: -1})
         .limit(4)
 
-        const fromCelebrity = await sticker.find({tag: {$in: 'Celebrity'}})
+        const fromCelebrity = await Sticker.find({tag: {$in: 'Celebrity'}})
         .sort({createdAt: -1})
         .limit(4)
         
-        const fromTech = await sticker.find({tag: {$in: 'Tech'}})
+        const fromTech = await Sticker.find({tag: {$in: 'Tech'}})
         .sort({createdAt: -1})
         .limit(4)
 
          res.render('home', {fromMusic, fromCelebrity, fromQuote, fromReligion, fromComedy, fromTech});
+
     }catch(error) {
+
         res.status(500).json({success: "Fasle", error: error.message})
     }
 }

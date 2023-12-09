@@ -17,6 +17,5 @@ html(lang="en")
       each sticker in stickersWithTag
         div
           img(src=sticker.link, alt=sticker.name, style='width: 100px; height: 100px;')
-          button(type="button") Add to cart
           h2
             a(href=`/api/stickers/getStickerById/${sticker._id}`)= sticker.name

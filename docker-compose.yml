@@ -6,17 +6,19 @@ services:
     image: mongo:latest
     restart: always
     volumes:
-      - mongodb:/data/db
+      # - mongodb:/data/db
+      - ./data:/data/db
   
   app:
     build: .
+    restart: always
     ports:
       - 3000:8080
     environment:
-        MONGO_LOCAL_CONN_URL : mongodb://mongodb:27017/wuhdet
+        MONGO_LOCAL_CONN_URL: mongodb://mongodb:27017/wuhdet
     depends_on:
       - mongodb
 volumes:
-  mongodb : {}
+  mongodb: {}
 
 

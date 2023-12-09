@@ -14,6 +14,7 @@ exports.jwtCookies = (req, res, next) => {
     }catch(error) {
         res.clearCookie('token');
         return res.redirect('/api/auth/login');
+        // return res.json({success: "False", message: "You have to login first."})
     }
 }
 

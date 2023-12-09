@@ -10,4 +10,27 @@ html
       ul
         each tag in result.tag
           li= tag
+    label(for="quantity") Quantity:
+    input(type="number" name="quantity" id="quantity" min="1" value="1")
+    
+    br
+    
+    form(method = 'POST' action = "/api/orders/" + stickerParam)
+      label(for="dimension") Dimension:
+      select(name="dimension" id="dimension") 
+        option(value="small") 10 cm x 10 cm
+        option(value="medium") 20 cm x 2 cm
+        option(value="large") 30 cm x 30 cm
+
+      br
+
+      label(for="agentId") Choose drop off agent location: 
+      select(name="agentId" id="agentId") 
+        option(value="653a61fce7f34cae19f4df34") HiLCoE 
+        option(value="653a61fce7f34cae19f4df34") 5 Kilo
+        option(value="653a61fce7f34cae19f4df34") 6 Kilo
+
+      br
+
+      button(type="submit") Add to cart
 

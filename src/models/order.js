@@ -11,19 +11,16 @@ const orderSchema = new mongoose.Schema({
         //but what is displayed to the user it the relative location of the agent
         type: mongoose.Schema.Types.ObjectId,
         default: null, 
-        // required: true,
         ref: 'Agent'
     },
 
     stickers: {
         type: [{
             id: mongoose.Schema.Types.ObjectId,
-            // id: String,
             quantity : Number,
             dimension: String,
-            price: Number
         }],
-        // required : true
+        required : true
     },
 
     status: {
@@ -43,15 +40,5 @@ const orderSchema = new mongoose.Schema({
         type:Number,
     }
 },{timestamps: true})
- 
-
-orderSchema.pre("save", function()  {
-    let totalPrice = 0;
-    this.stickers.forEach((order) => {
-        totalPrice += order.price;
-    })
-    this.price = totalPrice;
-})
-
 
 module.exports = mongoose.model('Orders', orderSchema);
