@@ -1,5 +1,5 @@
 # Online Sticker Shopping Back-End
-A minimalistic sticker purchasing back-end with Express and MognoDB.
+A minimalistic sticker purchasing back-end with Express and MongoDB.
 
 ## Technologies used
 
