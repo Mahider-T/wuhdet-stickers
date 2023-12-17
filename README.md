@@ -11,7 +11,7 @@ A minimalistic sticker purchasing back-end with Express and MongoDB.
 
 - **Cloudinary**: A cloud-based image and video management service, used for storing and managing sticker images.
 
-- **Google's OAuth** : Google's authentication system, utilized for secure and streamlined user authentication.
+- **Google's OAuth** : Google's authentication system, utilized for sending bulk email using gmail .
 
 - **JWT (JSON Web Tokens)** : A compact, URL-safe means of representing claims between two parties, widely used for authentication.
 
